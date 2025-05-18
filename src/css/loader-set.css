@@ -1,5 +1,34 @@
-.ball-scale-multiple > div {
+#global-loader {
+  display: none;
+}
+#global-loader.is-active {
+  display: flex;
+}
+
+.loader > div {
+  display: inline-block;
+  position: absolute;
+  left: 50%;
+  top: 50%;
   background-color: #ff7a00;
-  width: 12px;
-  height: 12px;
+  border-radius: 100%;
+  animation-fill-mode: both;
+  width: 15px;
+  height: 15px;
+  margin: -7.5px 0 0 -7.5px;
+  animation: ball-scale-multiple 1.8s infinite ease-in-out;
+}
+.loader > div:nth-child(2) {
+  animation-delay: -0.9s;
+}
+@keyframes ball-scale-multiple {
+  0%,
+  100% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1);
+    opacity: 1;
+  }
 }

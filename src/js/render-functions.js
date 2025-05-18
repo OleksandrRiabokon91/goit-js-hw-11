@@ -1,14 +1,53 @@
-// У файлі render - functions.js створи екземпляр SimpleLightbox для роботи з модальним вікном та зберігай функції
-//  для відображення елементів інтерфейсу:
+import SimpleLightbox from 'simplelightbox';
+import 'simplelightbox/dist/simple-lightbox.min.css';
 
-// createGallery(images).Ця функція повинна приймати масив images, створювати HTML - розмітку для галереї, додавати
-//  її в контейнер галереї та викликати метод екземпляра SimpleLightbox refresh().Нічого не повертає.
-// clearGallery(). Ця функція нічого не приймає та повинна очищати вміст контейнера галереї. Нічого не повертає.
-// showLoader(). Ця функція нічого не приймає, повинна додавати клас для відображення лоадера. Нічого не повертає.
-// hideLoader(). Ця функція нічого не приймає, повинна прибирати клас для відображення лоадера. Нічого не повертає.
+const galleryEl = document.querySelector('.gallery');
+const loaderEl = document.getElementById('global-loader');
 
-// Користувач буде вводити рядок для пошуку в текстове поле, а за сабмітом форми необхідно виконувати
-// HTTP - запит із цим пошуковим рядком.
+const lightbox = new SimpleLightbox('.gallery a', {
+  captions: true,
+  captionsData: 'alt',
+  captionDelay: 250,
+});
 
-// При натисканні на кнопку відправки форми, додайте перевірку вмісту текстового поля на наявність порожнього рядка,
-//     щоб користувач не міг відправити запит, якщо поле пошуку порожнє.
+export function createGallery(images) {
+  const markup = images
+    .map(
+      ({
+        webformatURL,
+        largeImageURL,
+        tags,
+        likes,
+        views,
+        comments,
+        downloads,
+      }) => `
+<li class="gallery__item">
+  <a class="gallery__link" href="${largeImageURL}">
+    <img class="gallery__image" src="${webformatURL}" alt="${tags}" loading="lazy" />
+  </a>
+  <ul class="info">
+    <li><b>Likes</b> ${likes}</li>
+    <li><b>Views</b> ${views}</li>
+    <li><b>Comments</b> ${comments}</li>
+    <li><b>Downloads</b> ${downloads}</li>
+  </ul>
+</li>`
+    )
+    .join('');
+
+  galleryEl.insertAdjacentHTML('beforeend', markup);
+  lightbox.refresh();
+}
+
+export function clearGallery() {
+  galleryEl.innerHTML = '';
+}
+
+export function showLoader() {
+  loaderEl.classList.add('is-active');
+}
+
+export function hideLoader() {
+  loaderEl.classList.remove('is-active');
+}

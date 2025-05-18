@@ -5,10 +5,14 @@
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Vanilla App Template</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="./css/styles.css" />
   </head>
   <body>
-    <form class="form">
+    <form class="form" novalidate>
       <label>
         <input
           type="text"
@@ -19,8 +23,12 @@
       </label>
       <button type="submit">Search</button>
     </form>
-    <div class="ball-scale-multiple" id="global-loader"></div>
-    <ul></ul>
+    <span class="loader" id="global-loader">
+      <div></div>
+      <div></div>
+      <div></div>
+    </span>
+    <ul class="gallery"></ul>
     <script type="module" src="./main.js"></script>
   </body>
 </html>

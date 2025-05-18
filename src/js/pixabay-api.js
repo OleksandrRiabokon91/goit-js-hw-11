@@ -1,36 +1,18 @@
 import axios from 'axios';
 
-import iziToast from 'izitoast';
+export async function getImagesByQuery(query) {
+  const baseURL = 'https://pixabay.com';
+  const endPoint = '/api/';
+  const url = baseURL + endPoint;
 
-import 'izitoast/dist/css/iziToast.min.css';
+  const params = {
+    key: '50355121-f8c083c230eef48e4f2dd2afb',
+    q: query,
+    image_type: 'photo',
+    orientation: 'horizontal',
+    safesearch: 'true',
+  };
 
-import SimpleLightbox from 'simplelightbox';
-
-import 'simplelightbox/dist/simple-lightbox.min.css';
-
-// У файлі pixabay-api.js зберігай функції для виконання HTTP-запитів:
-
-// getImagesByQuery(query).Ця функція повинна приймати один параметр query
-// (пошукове слово, яке є рядком), здійснювати HTTP - запит і повертати значення властивості data з отриманої відповіді.
-// ! пример кода для спинера загрузки
-function showLoader() {
-  document.querySelector('#global-loader').style.display = 'flex';
+  const { data } = await axios.get(url, { params });
+  return data.hits;
 }
-function hideLoader() {
-  document.querySelector('#global-loader').style.display = 'none';
-}
-
-axios.interceptors.request.use(cfg => {
-  showLoader();
-  return cfg;
-});
-axios.interceptors.response.use(
-  resp => {
-    hideLoader();
-    return resp;
-  },
-  err => {
-    hideLoader();
-    throw err;
-  }
-);
